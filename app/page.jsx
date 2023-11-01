@@ -4,6 +4,13 @@ import Foto2 from "../public/images/fotoukm2.jpg";
 import Foto3 from "../public/images/fotoukm3.jpg";
 import Foto4 from "../public/images/nib-ukm-menik-jaya.jpg";
 
+export async function generateMetadata(){
+	return{
+		title: "UMKM Organik",
+		description: "Profil dari UMKM yang bergerak di bidang organik.",
+	}
+}
+
 export default function Home() {
 	return (
 		<main className="min-h-screen flex flex-col justify-center items-center p-6">
