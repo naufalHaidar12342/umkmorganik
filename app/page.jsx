@@ -17,7 +17,7 @@ export async function generateMetadata() {
 }
 
 export async function getLatestUkm() {
-	const latestUkm = await fetch(process.env.KATALOG_UMKM_API, {
+	const latestUkm = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -45,7 +45,7 @@ export async function getLatestUkm() {
 }
 
 export async function fetchThreeLatestProduct() {
-	const latestProduct = await fetch(process.env.KATALOG_UMKM_API, {
+	const latestProduct = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -74,7 +74,7 @@ export async function fetchThreeLatestProduct() {
 }
 
 export async function fetchLatestBlogpost() {
-	const latestBlogpost = await fetch(process.env.KATALOG_UMKM_API, {
+	const latestBlogpost = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

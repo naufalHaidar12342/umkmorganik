@@ -16,7 +16,7 @@ export async function generateMetadata() {
 }
 
 export async function fetchLatestProduct() {
-	const latestProduct = await fetch(process.env.KATALOG_UMKM_API, {
+	const latestProduct = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
