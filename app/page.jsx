@@ -231,7 +231,7 @@ export default async function Home() {
 									src={blogpostFetched.creditImageReference.imageFile.url}
 									style={{ objectFit: "cover" }}
 									fill
-									priority={true}
+									priority={false}
 									sizes="(max-width:1366)100vw, 85vw"
 								/>
 								<CardFooter className="absolute bottom-0 xl:right-0 z-10 flex items-end xl:items-end flex-col p-4">
