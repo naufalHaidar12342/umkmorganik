@@ -20,7 +20,7 @@ export default function Header() {
 	const menuItems = [
 		{ pageName: "Halaman Utama", pageRoute: "/" },
 		{ pageName: "Katalog Produk", pageRoute: "/katalog-produk" },
-		{ pageName: "UKM", pageRoute: "/daftar-ukm" },
+		{ pageName: "UMKM", pageRoute: "/daftar-ukm" },
 		{ pageName: "Blog", pageRoute: "/blog-post" },
 	];
 

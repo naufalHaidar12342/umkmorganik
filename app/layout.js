@@ -9,7 +9,11 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body className={`${inter.className}`}>
 				<Header />
-				<Providers>{children}</Providers>
+				<Providers>
+					<main className="min-h-full flex flex-col justify-center items-center p-6">
+						{children}
+					</main>
+				</Providers>
 			</body>
 		</html>
 	);

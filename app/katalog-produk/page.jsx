@@ -5,6 +5,7 @@ import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import { FALLBACK_HYGRAPH_API } from "../constant/hygraph-api";
 export async function fetchUkmProducts() {}
 
 export async function generateMetadata() {
@@ -16,7 +17,7 @@ export async function generateMetadata() {
 }
 
 export async function fetchLatestProduct() {
-	const latestProduct = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
+	const latestProduct = await fetch(FALLBACK_HYGRAPH_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -47,43 +48,48 @@ export async function fetchLatestProduct() {
 export default async function ProductCatalog() {
 	const latestProduct = await fetchLatestProduct();
 	return (
-		<main className="min-h-full flex flex-col justify-center items-center p-6">
-			{/* drop-down untuk jenis marketplace yang menjual produk (shopee, tokopedia, dsb) */}
+		<div className="">
+			{/* in development: drop-down untuk jenis marketplace yang menjual produk (shopee, tokopedia, dsb) */}
+			{/* daftar produk */}
 			<div className="max-w-6xl">
-				<div className="block py-5">
-					<div className="flex gap-3">
-						<div>filter marketplace (🚧 in development) </div>
-						<div>filter jenis produk (🚧 in development) </div>
-					</div>
-				</div>
 				<div className="block">
-					<div className="grid grid-cols-1 xl:grid-cols-4 col-span-2 gap-5">
-						{latestProduct.map((product, index) => (
+					<div className="flex flex-col xl:flex-row items-start">
+						<h3 className="text-2xl font-semibold">Semua produk</h3>
+					</div>
+					<div className="grid grid-cols-1 xl:grid-cols-4 col-span-1 gap-5 py-4">
+						{latestProduct.map((productFetched, index) => (
 							<div className="flex flex-col" key={index}>
-								<Card className="pb-4">
+								<Card
+									className="col-span-12 sm:col-span-4 w-60 h-56 xl:h-[360px] relative"
+									isFooterBlurred
+								>
 									<Image
-										isZoomed
 										as={NextImage}
-										alt={`Cover image untuk produk`}
-										className=""
-										src={product.creditImageReference.imageFile.url}
-										width={300}
-										height={300}
+										isZoomed
+										removeWrapper
+										alt={`Cover image untuk produk ${productFetched.productName}`}
+										className="z-0"
+										src={productFetched.creditImageReference.imageFile.url}
+										style={{ objectFit: "cover" }}
+										fill
 										priority={true}
-										// style={{ objectFit: "cover" }}
-										// fill
+										sizes="(max-width:1366)100vw, 85vw"
 									/>
-
-									<CardFooter className="pb-0 pt-5 px-4 flex-col items-start">
-										<h4 className="font-bold text-large">
-											{product.productName}
-										</h4>
+									<CardFooter className="absolute bottom-0 xl:right-0 z-10 items-start flex flex-col p-4">
+										<div className="flex flex-col">
+											<span className="">
+												{productFetched.productOrigin.ukmName}
+											</span>
+											<span className="font-semibold">
+												{productFetched.productName}
+											</span>
+										</div>
 										<Link
 											as={NextLink}
-											href={`/katalog-produk/${product.productSlug}`}
 											color="primary"
-											className="capitalize"
-											underline="hover"
+											href={`/katalog-produk/${productFetched.productSlug}`}
+											className="w-full mt-4 xl:mt-0 xl:w-auto capitalize"
+											size="lg"
 										>
 											Info lengkap
 										</Link>
@@ -94,6 +100,6 @@ export default async function ProductCatalog() {
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
 	);
 }

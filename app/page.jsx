@@ -8,6 +8,7 @@ import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 import NextLink from "next/link";
+import { FALLBACK_HYGRAPH_API } from "./constant/hygraph-api";
 
 export async function generateMetadata() {
 	return {
@@ -17,7 +18,7 @@ export async function generateMetadata() {
 }
 
 export async function getLatestUkm() {
-	const latestUkm = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
+	const latestUkm = await fetch(`${FALLBACK_HYGRAPH_API}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -45,7 +46,7 @@ export async function getLatestUkm() {
 }
 
 export async function fetchThreeLatestProduct() {
-	const latestProduct = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
+	const latestProduct = await fetch(FALLBACK_HYGRAPH_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -74,7 +75,7 @@ export async function fetchThreeLatestProduct() {
 }
 
 export async function fetchLatestBlogpost() {
-	const latestBlogpost = await fetch(process.env.NEXT_PUBLIC_KATALOG_UMKM_API, {
+	const latestBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -104,7 +105,7 @@ export default async function Home() {
 	const fetchedBlogpost = await fetchLatestBlogpost();
 	// console.log("isi data di home=", fetchedUkm);
 	return (
-		<main className="min-h-full flex flex-col justify-center items-center p-6">
+		<div id="homepage">
 			{/* featured umkm (umkm minggu ini) */}
 			<div className="max-w-6xl" id="content-width">
 				<div className="block pt-8 pb-9">
@@ -168,13 +169,13 @@ export default async function Home() {
 						{fetchedProduct.map((productFetched, index) => (
 							<div className="flex flex-col" key={index}>
 								<Card
-									className="col-span-12 sm:col-span-4 h-[300px] relative"
+									className="col-span-12 sm:col-span-4 h-56 xl:h-[300px] relative"
 									isFooterBlurred
 								>
 									<Image
 										as={NextImage}
 										removeWrapper
-										alt={`Cover image untuk produk ${fetchedProduct.productName}`}
+										alt={`Cover image untuk produk ${productFetched.productName}`}
 										className="z-0"
 										src={productFetched.creditImageReference.imageFile.url}
 										style={{ objectFit: "cover" }}
@@ -222,7 +223,7 @@ export default async function Home() {
 					</div>
 					{fetchedBlogpost.map((blogpostFetched, index) => (
 						<div className="flex flex-col" key={index}>
-							<Card className="h-[500px] relative" isFooterBlurred>
+							<Card className="h-56 xl:h-[500px] relative" isFooterBlurred>
 								<Image
 									as={NextImage}
 									removeWrapper
@@ -253,6 +254,6 @@ export default async function Home() {
 					))}
 				</div>
 			</div>
-		</main>
+		</div>
 	);
 }
