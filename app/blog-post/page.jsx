@@ -73,7 +73,7 @@ export default async function BlogPost() {
 			{/* satu postingan terbaru */}
 			<div className="flex flex-col">
 				<div className="flex flex-col justify-start pb-5 font-semibold">
-					<h3 className="text-2xl">Info Terbaru</h3>
+					<h3 className="text-2xl">Post Terbaru</h3>
 				</div>
 				{fetchedBlogpost.map((blogpostFetched, index) => (
 					<div className="flex flex-col" key={index}>
@@ -113,7 +113,7 @@ export default async function BlogPost() {
 				<div className="flex flex-col justify-start pb-5 font-semibold">
 					<h3 className="text-2xl">Semua Postingan</h3>
 				</div>
-				<div className="grid grid-cols-1 xl:grid-cols-3 col-span-2 gap-7 py-5">
+				<div className="grid grid-cols-1 xl:grid-cols-3 col-span-2 gap-7 pb-5">
 					{fetchedBlogpost.map((blogpostFetched, index) => (
 						<div className="flex flex-col" key={index}>
 							<Card className="h-56 xl:h-[350px] relative" isFooterBlurred>
