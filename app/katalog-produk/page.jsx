@@ -13,6 +13,13 @@ export async function generateMetadata() {
 		title: "Katalog Produk",
 		description:
 			"Katalog produk yang dipasarkan oleh UMKM yang hadir di website ini.",
+		url: "https://umkmorganik.org/katalog-produk",
+		openGraph: {
+			title: "Katalog Produk",
+			description:
+				"Katalog produk yang dipasarkan oleh UMKM yang hadir di website ini.",
+			url: "https://umkmorganik.org/katalog-produk",
+		},
 	};
 }
 
@@ -75,7 +82,7 @@ export default async function ProductCatalog() {
 										priority={true}
 										sizes="(max-width:1366)100vw, 85vw"
 									/>
-									<CardFooter className="absolute bottom-0 xl:right-0 z-10 items-start flex flex-col p-4">
+									<CardFooter className="absolute bottom-0 xl:right-0 z-10 flex flex-col items-start p-4">
 										<div className="flex flex-col">
 											<span className="">
 												{productFetched.productOrigin.ukmName}

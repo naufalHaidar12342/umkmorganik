@@ -11,13 +11,33 @@ import NextLink from "next/link";
 import { FALLBACK_HYGRAPH_API } from "./constant/hygraph-api";
 
 export async function generateMetadata() {
+	const mainUkm = await getMainUkm();
+	const [openGraphTitle] = mainUkm.map((item) => item.ukmName);
+	const [openGraphDescription] = mainUkm.map((item) => item.ukmDescription);
+	const [openGraphImage] = mainUkm.map(
+		(item) => item.creditImageReference.imageFile.url
+	);
 	return {
 		title: "UMKM Organik",
 		description: "Menyediakan informasi seputar UMKM dengan produk organik.",
+		url: "https://umkmorganik.org",
+		openGraph: {
+			title: "UMKM Organik",
+			description: "Menyediakan informasi seputar UMKM dengan produk organik.",
+			url: "https://umkmorganik.org",
+			images: [
+				{
+					url: openGraphImage,
+					width: 1280,
+					height: 600,
+					alt: openGraphTitle,
+				},
+			],
+		},
 	};
 }
 
-export async function getLatestUkm() {
+export async function getMainUkm() {
 	const latestUkm = await fetch(`${FALLBACK_HYGRAPH_API}`, {
 		method: "POST",
 		headers: {
@@ -25,8 +45,8 @@ export async function getLatestUkm() {
 		},
 		next: { revalidate: 100 },
 		body: JSON.stringify({
-			query: `query LatestUkmProfile {
-				ukmProfiles(orderBy: createdAt_DESC, first: 1) {
+			query: `query MainUkmProfile {
+				ukmProfiles(where: {ukmSlug: "ukm-menik-jaya"}) {
 					ukmName
 					ukmSlug
 					ukmDescription
@@ -100,7 +120,7 @@ export async function fetchLatestBlogpost() {
 }
 
 export default async function Home() {
-	const fetchedUkm = await getLatestUkm();
+	const fetchedUkm = await getMainUkm();
 	const fetchedProduct = await fetchThreeLatestProduct();
 	const fetchedBlogpost = await fetchLatestBlogpost();
 	// console.log("isi data di home=", fetchedUkm);
@@ -109,7 +129,7 @@ export default async function Home() {
 			{/* featured umkm (umkm minggu ini) */}
 			<div className="max-w-6xl" id="content-width">
 				<div className="block pt-8 pb-9">
-					<h2 className="flex justify-start xl:justify-end text-3xl font-bold py-5">
+					<h2 className="flex justify-start xl:justify-end text-3xl font-bold pb-5">
 						Info UKM
 					</h2>
 					{fetchedUkm.map((ukmFetched, index) => (
