@@ -7,29 +7,10 @@ import { FALLBACK_HYGRAPH_API } from "../constant/hygraph-api";
 import { Divider } from "@nextui-org/divider";
 
 export async function generateMetadata() {
-	const [latestBlogpost] = await fetchLatestBlogpost();
-	const openGraphBlogpostTitle = latestBlogpost.postTitle;
-	const openGraphBlogpostImage =
-		latestBlogpost.creditImageReference.imageFile.url;
 	return {
 		title: "Blogpost UMKM Organik",
 		description:
 			"Informasi, tips, update terkini seputar produk organik dan UMKM",
-		url: "https://umkmorganik.org/blog-post",
-		openGraph: {
-			title: "Blogpost UMKM Organik",
-			description:
-				"Informasi, tips, update terkini seputar produk organik dan UMKM",
-			url: "https://umkmorganik.org/blog-post",
-			images: [
-				{
-					url: openGraphBlogpostImage,
-					width: 1280,
-					height: 600,
-					alt: `Foto sampul untuk blogpost UMKM Organik dengan judul: ${openGraphBlogpostTitle}`,
-				},
-			],
-		},
 	};
 }
 

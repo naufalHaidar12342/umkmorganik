@@ -6,37 +6,9 @@ import { Link } from "@nextui-org/link";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { FALLBACK_HYGRAPH_API } from "../constant/hygraph-api";
-
-export async function fetchOpenGraphUkmProduct() {
-	const openGraphUkmProduct = await fetch(FALLBACK_HYGRAPH_API, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		next: { revalidate: 100 },
-		body: JSON.stringify({
-			query: `query LatestProducts {
-				products(orderBy: createdAt_DESC, first: 1) {
-					productName
-					creditImageReference {
-						imageFile {
-							url
-						}
-					}
-				}
-			}`,
-		}),
-	})
-		.then((res) => res.json())
-		.catch((err) => console.log(err));
-	return openGraphUkmProduct.data.products;
-}
+export async function fetchUkmProducts() {}
 
 export async function generateMetadata() {
-	const [openGraphUkmProduct] = await fetchOpenGraphUkmProduct();
-	const openGraphProductName = openGraphUkmProduct.productName;
-	const openGraphProductImage =
-		openGraphUkmProduct.creditImageReference.imageFile.url;
 	return {
 		title: "Katalog Produk",
 		description:
@@ -47,14 +19,6 @@ export async function generateMetadata() {
 			description:
 				"Katalog produk yang dipasarkan oleh UMKM yang hadir di website ini.",
 			url: "https://umkmorganik.org/katalog-produk",
-			images: [
-				{
-					url: openGraphProductImage,
-					width: 1280,
-					height: 600,
-					alt: `Foto sampul untuk produk ${openGraphProductName}`,
-				},
-			],
 		},
 	};
 }
