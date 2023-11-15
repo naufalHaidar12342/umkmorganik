@@ -38,11 +38,10 @@ export async function generateMetadata() {
 }
 
 export async function getMainUkm() {
-	const latestUkm = await fetch(`${process.env.HYGRAPH_KATALOG_UMKM}`, {
+	const latestUkm = await fetch(`${FALLBACK_HYGRAPH_API}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${process.env.HYGRAPH_TOKEN}`,
 		},
 		next: { revalidate: 100 },
 		body: JSON.stringify({
