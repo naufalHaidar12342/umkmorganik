@@ -1,14 +1,12 @@
 import NextImage from "next/image";
-import Foto1 from "@/public/images/fotoukm1.jpg";
-import Foto2 from "@/public/images/fotoukm2.jpg";
-import Foto3 from "@/public/images/fotoukm3.jpg";
-import Foto4 from "@/public/images/nib-ukm-menik-jaya.jpg";
 import { Card, CardHeader, CardFooter, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 import NextLink from "next/link";
 import { FALLBACK_HYGRAPH_API } from "./constant/hygraph-api";
+import { Suspense } from "react";
+import LatestProductSkeleton from "./components/latestproduct-skeleton";
 
 export async function generateMetadata() {
 	const mainUkm = await getMainUkm();
@@ -126,9 +124,9 @@ export default async function Home() {
 	// console.log("isi data di home=", fetchedUkm);
 	return (
 		<div id="homepage">
-			{/* featured umkm (umkm minggu ini) */}
 			<div className="max-w-6xl" id="content-width">
-				<div className="block pt-8 pb-9">
+				{/* featured umkm (umkm minggu ini) */}
+				<div className="block pt-2 pb-9">
 					<h2 className="flex justify-start xl:justify-end text-3xl font-bold pb-5">
 						Info UKM
 					</h2>
@@ -163,7 +161,6 @@ export default async function Home() {
 										color="success"
 										className="font-semibold pt-3"
 										underline="hover"
-										showAnchorIcon
 									>
 										Profil Lengkap UKM
 									</Link>
@@ -185,11 +182,11 @@ export default async function Home() {
 							Lihat semua
 						</Link>
 					</div>
-					<div className="grid grid-cols-1 xl:grid-cols-3 col-span-3 gap-5">
+					<div className="grid md:grid-cols-2 xl:grid-cols-3 col-span-3 gap-5">
 						{fetchedProduct.map((productFetched, index) => (
 							<div className="flex flex-col" key={index}>
 								<Card
-									className="col-span-12 sm:col-span-4 h-56 xl:h-[300px] relative"
+									className="col-span-12 sm:col-span-4 h-60 lg:h-[350px] relative"
 									isFooterBlurred
 								>
 									<Image

@@ -1,6 +1,4 @@
-import FilterProduk from "@/app/components/filter-produk";
-import MarketplaceDropdown from "@/app/components/marketplace-dropdown";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { Card, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 import NextImage from "next/image";
@@ -99,7 +97,7 @@ export default async function ProductCatalog() {
 					<div className="flex flex-col xl:flex-row items-start">
 						<h3 className="text-2xl font-semibold">Semua produk</h3>
 					</div>
-					<div className="grid grid-cols-1 xl:grid-cols-4 col-span-1 gap-5 py-4">
+					<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-4">
 						{latestProduct.map((productFetched, index) => (
 							<div className="flex flex-col" key={index}>
 								<Card
