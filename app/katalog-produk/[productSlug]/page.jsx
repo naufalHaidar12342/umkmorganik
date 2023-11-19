@@ -81,7 +81,7 @@ export default async function ProductInfos({ params }) {
 	const productLink = selectedProduct.productLink;
 	return (
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
-			<div className="flex flex-col flex-wrap items-center">
+			<div className="flex flex-col items-center">
 				<div className="w-full h-56 xl:h-[400px] relative">
 					<Image
 						removeWrapper

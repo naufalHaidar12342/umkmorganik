@@ -90,7 +90,7 @@ export async function generateMetadata() {
 export default async function UmkmList() {
 	const fetchedUkmProfiles = await fetchAllUmkmProfiles();
 	return (
-		<div className="flex flex-col flex-wrap w-full max-w-6xl">
+		<div className="h-screen flex flex-col flex-wrap w-full max-w-6xl">
 			<h3 className="text-2xl font-bold text-center xl:text-start">
 				UMKM Dengan Produk Organik
 			</h3>

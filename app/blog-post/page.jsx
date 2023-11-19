@@ -59,13 +59,13 @@ export async function fetchLatestBlogpost() {
 }
 
 export async function fetchAllBlogpost() {
-	const latestBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
+	const allBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			query: `query LatestBlogPost {
+			query: `query AllBlogpost {
 				blogPosts(orderBy: createdAt_DESC) {
 					postTitle
 					postSlug
@@ -80,7 +80,7 @@ export async function fetchAllBlogpost() {
 	})
 		.then((res) => res.json())
 		.catch((err) => console.log(err));
-	return latestBlogpost.data.blogPosts;
+	return allBlogpost.data.blogPosts;
 }
 
 export default async function BlogPost() {
@@ -133,7 +133,7 @@ export default async function BlogPost() {
 					<h3 className="text-2xl">Semua Postingan</h3>
 				</div>
 				<div className="grid grid-cols-1 xl:grid-cols-3 col-span-2 gap-7 pb-5">
-					{fetchedBlogpost.map((blogpostFetched, index) => (
+					{fetchedAllBlogpost.map((blogpostFetched, index) => (
 						<div className="flex flex-col" key={index}>
 							<Card className="h-56 xl:h-[350px] relative" isFooterBlurred>
 								<Image
