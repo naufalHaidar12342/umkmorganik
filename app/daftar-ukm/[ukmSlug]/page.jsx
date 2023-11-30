@@ -54,7 +54,6 @@ export async function fetchSelectedUkmProfile(ukmSlug) {
 						}
 					}
 					categoryOfUkmProducts
-					ukmSocialMedia
 					ukmWebsite
 				}
 			}`,
