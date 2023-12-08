@@ -4,6 +4,9 @@ import { Image } from "@nextui-org/image";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import ReactMarkdown from "react-markdown";
+import { Chip } from "@nextui-org/chip";
+import { Button } from "@nextui-org/button";
+import { IoCartOutline } from "react-icons/io5";
 
 export async function generateMetadata({ params }) {
 	const [selectedProduct] = await fetchInfoSelectedProduct(params.productSlug);
@@ -42,6 +45,7 @@ export async function fetchInfoSelectedProduct(productSlug) {
 				products(where: {productSlug: "${productSlug}"}) {
 					productName
 					productDescription
+					productLink
 					category
 					productOrigin{
 						ukmName
@@ -71,11 +75,13 @@ export default async function ProductInfos({ params }) {
 	const productCreditImage =
 		selectedProduct.creditImageReference.imageCreditMarkdown;
 	const productCategory = selectedProduct.category;
+	// console.log("kategori produk", productCategory);
 	const productOriginUkmName = selectedProduct.productOrigin.ukmName;
 	const productOriginUkmSlug = selectedProduct.productOrigin.ukmSlug;
+	const productLink = selectedProduct.productLink;
 	return (
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
-			<div className="flex flex-col flex-wrap items-center gap-4">
+			<div className="flex flex-col items-center">
 				<div className="w-full h-56 xl:h-[400px] relative">
 					<Image
 						removeWrapper
@@ -89,7 +95,7 @@ export default async function ProductInfos({ params }) {
 					/>
 				</div>
 				<ReactMarkdown
-					className="italic "
+					className="italic pt-2"
 					components={{
 						a: (link) => {
 							return (
@@ -107,19 +113,40 @@ export default async function ProductInfos({ params }) {
 				>
 					{productCreditImage}
 				</ReactMarkdown>
-				<h3 className=" text-2xl font-semibold">{productName}</h3>
-				<p className="text-md">
-					Produk dari{" "}
-					<Link
-						as={NextLink}
-						color="primary"
-						showAnchorIcon
-						href={productOriginUkmSlug}
-					>
-						{productOriginUkmName}
-					</Link>
-				</p>
-				<p className="text-lg xl:text-xl">{productDescription}</p>
+				<div className="w-full grid grid-cols-1 xl:grid-cols-3 items-start gap-5 pt-3">
+					<div className="flex flex-col xl:col-span-1">
+						<h3 className=" text-xl font-semibold">
+							{productOriginUkmName} - {productName}
+						</h3>
+						<Button
+							as={Link}
+							href={`
+								${productLink === null ? "#belum-ada-link-produk" : productLink}
+							`}
+							size="lg"
+							className="mt-3 text-lg font-medium"
+							color="primary"
+							variant="shadow"
+							startContent={<IoCartOutline className="w-6 h-6" />}
+						>
+							Belanja sekarang
+						</Button>
+					</div>
+					<div className="flex flex-col col-span-2">
+						<h4 className="text-lg text-primary-400 font-semibold">
+							Deskripsi produk
+						</h4>
+						<p className="text-lg">{productDescription}</p>
+						{/* kategori produk */}
+						<div className="flex flex-wrap gap-2 pt-1">
+							{productCategory.map((category, index) => (
+								<Chip key={index} color="success" variant="faded">
+									{category}
+								</Chip>
+							))}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

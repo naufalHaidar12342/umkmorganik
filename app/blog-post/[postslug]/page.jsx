@@ -3,6 +3,10 @@ import { Link } from "@nextui-org/link";
 import { Image } from "@nextui-org/image";
 import NextImage from "next/image";
 import ReactMarkdown from "react-markdown";
+import { Chip } from "@nextui-org/chip";
+import ISOTimeToHumanReadable from "@/app/utilities/iso_date_to_human_format";
+import { IoMdSync } from "react-icons/io";
+import { TfiWrite } from "react-icons/tfi";
 
 export async function fetchSelectedBlogpost(postSlug) {
 	const selectedBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
@@ -12,9 +16,12 @@ export async function fetchSelectedBlogpost(postSlug) {
 		},
 		body: JSON.stringify({
 			query: `query SelectedBlogPost {
-				blogPosts(where:{postSlug: "${postSlug}"}) {
+				blogPosts(where:{postSlug: "${postSlug}"}, stage: PUBLISHED) {
 					postTitle
 					postSlug
+					createdAt
+					updatedAt
+					publishedAt
 					creditImageReference {
 						imageFile {
 							url
@@ -63,6 +70,9 @@ export async function generateMetadata({ params }) {
 export default async function ReadUmkmOrganikPost({ params }) {
 	const [blogPost] = await fetchSelectedBlogpost(params.postslug);
 	// console.log("isi blogPost kaya gimana=", blogPost);
+	const blogPostWrittenDate = blogPost.createdAt;
+	const blogPostPublishedDate = blogPost.publishedAt;
+	const blogPostUpdatedDate = blogPost.updatedAt;
 	const customizedMarkdownComponents = {
 		p: (paragraph) => {
 			const { node } = paragraph;
@@ -95,57 +105,79 @@ export default async function ReadUmkmOrganikPost({ params }) {
 			return (
 				<Link
 					color="primary"
+					className="text-lg"
 					href={link.href}
 					referrerPolicy="no-referrer"
 					target="_blank"
+					showAnchorIcon
 				>
 					{link.children}
 				</Link>
 			);
 		},
+		ol: (list) => {
+			return <ol className="list-decimal list-inside">{list.children}</ol>;
+		},
 	};
 	return (
-		<div className="flex flex-col flex-wrap w-full max-w-6xl">
-			<div className="flex flex-col flex-wrap items-center">
-				<h3 className="pb-5 text-3xl font-semibold">{blogPost.postTitle}</h3>
-				<div className="w-full h-56 xl:h-[370px] relative">
-					<Image
-						removeWrapper
-						as={NextImage}
-						src={blogPost.creditImageReference.imageFile.url}
-						alt={`Cover image untuk postingan berjudul ${blogPost.postTitle}`}
-						style={{ objectFit: "cover" }}
-						fill
-						priority={true}
-						sizes="(max-width:1366)100vw, 85vw"
-					/>
-				</div>
-				<ReactMarkdown
-					className="italic pt-3"
-					components={{
-						a: (link) => {
-							return (
-								<Link
-									color="primary"
-									href={link.href}
-									referrerPolicy="no-referrer"
-									target="_blank"
-								>
-									{link.children}
-								</Link>
-							);
-						},
-					}}
-				>
-					{blogPost.creditImageReference.imageCreditMarkdown}
-				</ReactMarkdown>
-				<ReactMarkdown
-					className="py-4"
-					components={customizedMarkdownComponents}
-				>
-					{blogPost.content.markdown}
-				</ReactMarkdown>
+		<div className="flex flex-col w-full max-w-6xl">
+			<h3 className="pb-5 text-3xl font-semibold text-center">
+				{blogPost.postTitle}
+			</h3>
+			<div className="w-full h-56 xl:h-[370px] relative">
+				{/* warna yang dipakai untuk blurDataUrl= rgb(49, 49, 57) atau #313139. base64 di-generate oleh https://png-pixel.com/ */}
+				<Image
+					removeWrapper
+					as={NextImage}
+					src={blogPost.creditImageReference.imageFile.url}
+					alt={`Cover image untuk postingan berjudul ${blogPost.postTitle}`}
+					style={{ objectFit: "cover" }}
+					fill
+					priority={true}
+					sizes="(max-width:1366)100vw, 85vw"
+					blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk4PasBwABPADV+Pkg4wAAAABJRU5ErkJggg=="
+				/>
 			</div>
+			<ReactMarkdown
+				className="text-center italic pt-3"
+				components={{
+					a: (link) => {
+						return (
+							<Link
+								color="primary"
+								href={link.href}
+								referrerPolicy="no-referrer"
+								target="_blank"
+							>
+								{link.children}
+							</Link>
+						);
+					},
+				}}
+			>
+				{blogPost.creditImageReference.imageCreditMarkdown}
+			</ReactMarkdown>
+			<div className="flex flex-col gap-2">
+				<Chip
+					className="text-base"
+					variant="flat"
+					color="success"
+					startContent={<IoMdSync className="mx-[6px]" />}
+				>
+					Diperbarui: {ISOTimeToHumanReadable(blogPostUpdatedDate)}
+				</Chip>
+				<Chip
+					className="text-base"
+					variant="flat"
+					color="primary"
+					startContent={<TfiWrite className="mx-[6px]" />}
+				>
+					Ditulis: {ISOTimeToHumanReadable(blogPostWrittenDate)}
+				</Chip>
+			</div>
+			<ReactMarkdown className="py-4" components={customizedMarkdownComponents}>
+				{blogPost.content.markdown}
+			</ReactMarkdown>
 		</div>
 	);
 }
