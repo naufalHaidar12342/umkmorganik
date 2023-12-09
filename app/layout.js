@@ -3,7 +3,7 @@ import { Providers } from "./providers";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { inter } from "./fonts";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
 					</main>
 				</Providers>
 				<Footer />
+				<SpeedInsights />
 			</body>
 		</html>
 	);

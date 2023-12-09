@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.13",
+    "@vercel/speed-insights": "^1.0.1",
     "framer-motion": "^10.16.4",
     "luxon": "^3.4.3",
     "next": "^14.0.2",
