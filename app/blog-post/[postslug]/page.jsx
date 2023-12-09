@@ -7,6 +7,7 @@ import { Chip } from "@nextui-org/chip";
 import ISOTimeToHumanReadable from "@/app/utilities/iso_date_to_human_format";
 import { IoMdSync } from "react-icons/io";
 import { TfiWrite } from "react-icons/tfi";
+import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 
 export async function fetchSelectedBlogpost(postSlug) {
 	const selectedBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
@@ -82,16 +83,16 @@ export default async function ReadUmkmOrganikPost({ params }) {
 				const imageAlt = metaString?.replace(/ *\{[^)]*\} */g, "");
 				return (
 					<div className="w-full h-60 xl:h-[600px] relative py-2">
-						<Image
-							as={NextImage}
-							removeWrapper
+						<NextImage
 							src={image.properties.src}
 							alt={imageAlt}
 							style={{ objectFit: "cover" }}
-							className=""
+							className="rounded-2xl"
 							fill={true}
-							sizes="(max-width: 1366px)100vw, 80vw"
+							sizes="(max-width: 1366px)100vw, 70vw"
 							priority={false}
+							placeholder="blur"
+							blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
 						/>
 					</div>
 				);
@@ -124,18 +125,17 @@ export default async function ReadUmkmOrganikPost({ params }) {
 			<h3 className="pb-5 text-3xl font-semibold text-center">
 				{blogPost.postTitle}
 			</h3>
-			<div className="w-full h-56 xl:h-[370px] relative">
+			<div className="w-full h-56 xl:h-[400px] relative">
 				{/* warna yang dipakai untuk blurDataUrl= rgb(49, 49, 57) atau #313139. base64 di-generate oleh https://png-pixel.com/ */}
-				<Image
-					removeWrapper
-					as={NextImage}
+				<NextImage
+					className="rounded-2xl"
 					src={blogPost.creditImageReference.imageFile.url}
 					alt={`Cover image untuk postingan berjudul ${blogPost.postTitle}`}
 					style={{ objectFit: "cover" }}
 					fill
 					priority={true}
-					sizes="(max-width:1366)100vw, 85vw"
-					blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk4PasBwABPADV+Pkg4wAAAABJRU5ErkJggg=="
+					sizes="(max-width:1366px)100vw, 70vw"
+					blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
 				/>
 			</div>
 			<ReactMarkdown

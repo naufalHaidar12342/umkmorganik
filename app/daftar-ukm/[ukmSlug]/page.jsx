@@ -11,6 +11,7 @@ import { SiShopee } from "react-icons/si";
 import ShopeeMarketplaceButton from "./shopee-button";
 import UkmWebsiteLink from "./ukm-website-link";
 import TokopediaMarketplace from "./tokopedia-button";
+import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 
 export async function generateMetadata({ params }) {
 	const [selectedUkm] = await fetchSelectedUkmProfile(params.ukmSlug);
@@ -125,15 +126,16 @@ export default async function ReadUmkmProfile({ params }) {
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
 			<div className="flex flex-col flex-wrap items-start">
 				<div className="w-full h-56 xl:h-[440px] items-center relative">
-					<Image
-						removeWrapper
-						as={NextImage}
+					<NextImage
+						className="rounded-2xl"
 						src={ukmCoverImage}
 						alt={`Foto sampul dari ${ukmName}`}
 						style={{ objectFit: "cover" }}
 						fill
 						priority={true}
-						sizes="(max-width:1366)100vw, 85vw"
+						sizes="(max-width:480px) 100vw, (max-width:1366px) 80vw, 65vw"
+						placeholder="blur"
+						blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
 					/>
 				</div>
 				{/* credit foto sampul untuk profil ukm */}
@@ -209,7 +211,9 @@ export default async function ReadUmkmProfile({ params }) {
 										style={{ objectFit: "cover" }}
 										fill
 										priority={true}
-										sizes="(max-width:1366)100vw, 85vw"
+										sizes="(max-width:480px) 100vw, (max-width:1366px) 80vw, 65vw"
+										placeholder="blur"
+										blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
 									/>
 									<CardFooter className="absolute bottom-0 xl:right-0 z-10 flex flex-col items-start p-4">
 										<div className="flex flex-col">

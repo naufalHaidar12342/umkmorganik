@@ -4,6 +4,7 @@ import { Image } from "@nextui-org/image";
 import { FALLBACK_HYGRAPH_API } from "@/app/constant/hygraph-api";
 import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
+import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 
 export async function fetchUkmProfileForMetadata() {
 	const ukmMetadata = await fetch(FALLBACK_HYGRAPH_API, {
@@ -109,7 +110,9 @@ export default async function UmkmList() {
 								style={{ objectFit: "cover" }}
 								fill
 								priority={true}
-								sizes="(max-width:1366)100vw, 85vw"
+								sizes="(max-width:1366px)100vw, 85vw"
+								placeholder="blur"
+								blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
 							/>
 						</div>
 						<div className="w-full flex flex-col justify-center items-start p-6">
