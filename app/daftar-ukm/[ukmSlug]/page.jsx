@@ -6,6 +6,11 @@ import NextImage from "next/image";
 import ReactMarkdown from "react-markdown";
 import { Divider } from "@nextui-org/divider";
 import { Card, CardFooter } from "@nextui-org/card";
+import { Button } from "@nextui-org/button";
+import { SiShopee } from "react-icons/si";
+import ShopeeMarketplaceButton from "./shopee-button";
+import UkmWebsiteLink from "./ukm-website-link";
+import TokopediaMarketplace from "./tokopedia-button";
 
 export async function generateMetadata({ params }) {
 	const [selectedUkm] = await fetchSelectedUkmProfile(params.ukmSlug);
@@ -40,6 +45,7 @@ export async function fetchSelectedUkmProfile(ukmSlug) {
 		headers: {
 			"Content-Type": "application/json",
 		},
+		cache: "no-cache",
 		body: JSON.stringify({
 			query: `query SelectedUkmProfile{
 				ukmProfiles(where: {ukmSlug: "${ukmSlug}"}) {
@@ -47,14 +53,20 @@ export async function fetchSelectedUkmProfile(ukmSlug) {
 					ukmSlug
 					ukmDescription
 					ukmChairman
+					categoryOfUkmProducts
+					ukmWebsite
 					creditImageReference{
 						imageCreditMarkdown
 						imageFile{
 							url
 						}
 					}
-					categoryOfUkmProducts
-					ukmWebsite
+					ukmMarketplaces{
+						shopeeStore
+						tokopediaStore
+						blibliStore
+						lazadaStore
+					}
 				}
 			}`,
 		}),
@@ -72,7 +84,7 @@ export async function fetchProductsOfSelectedUkm(ukmSlug) {
 		},
 		body: JSON.stringify({
 			query: `query ProductsOfSelectedUkm{
-				products(where: {productOrigin: {ukmSlug: "${ukmSlug}"}}) {
+				products(where: {productOrigin: {ukmSlug: "${ukmSlug}"}}, orderBy: createdAt_DESC) {
 					productName
 					productSlug
 					creditImageReference {
@@ -94,6 +106,7 @@ export async function fetchProductsOfSelectedUkm(ukmSlug) {
 
 export default async function ReadUmkmProfile({ params }) {
 	const [selectedUkm] = await fetchSelectedUkmProfile(params.ukmSlug);
+	// console.log("isi ukm terpilih=", selectedUkm);
 	const ukmName = selectedUkm.ukmName;
 	const ukmDescription = selectedUkm.ukmDescription;
 	const ukmChairman = selectedUkm.ukmChairman;
@@ -103,6 +116,11 @@ export default async function ReadUmkmProfile({ params }) {
 	const productsOfSelectedUkm = await fetchProductsOfSelectedUkm(
 		params.ukmSlug
 	);
+	const [ukmMarketplaces] = selectedUkm.ukmMarketplaces;
+	console.log("isi ukmMarketplaces=", ukmMarketplaces);
+	// const shopeeStore = ukmMarketplaces.shopeeStore;
+	// console.log("isi shopeeStore=", shopeeStore);
+
 	return (
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
 			<div className="flex flex-col flex-wrap items-start">
@@ -148,22 +166,23 @@ export default async function ReadUmkmProfile({ params }) {
 						{selectedUkm.categoryOfUkmProducts.map((item) => item)}
 					</p>
 					<div className="flex flex-col xl:flex-row xl:gap-1 text-lg">
-						Situs milik UKM :{" "}
-						<Link
-							showAnchorIcon={selectedUkm.ukmWebsite === null ? false : true}
-							href={
-								selectedUkm.ukmWebsite === null
-									? "#belum-ada-situs"
-									: selectedUkm.ukmWebsite
-							}
-							color="success"
-						>
-							{selectedUkm.ukmWebsite === null
-								? "UKM ini belum memiliki website"
-								: selectedUkm.ukmName}
-						</Link>{" "}
+						<span>Situs milik UKM:</span>
+						<UkmWebsiteLink
+							ukmName={ukmName}
+							ukmWebsite={selectedUkm.ukmWebsite}
+						/>
 					</div>
-
+					<div className="flex flex-col md:flex-row md:items-center gap-3 pt-4">
+						<span className="text-lg">Lapak/marketplace UKM :</span>
+						<ShopeeMarketplaceButton
+							shopeeMarketplaceLink={ukmMarketplaces.shopeeStore}
+							ukmName={ukmName}
+						/>
+						<TokopediaMarketplace
+							ukmTokopediaLink={ukmMarketplaces.tokopediaStore}
+							ukmName={ukmName}
+						/>
+					</div>
 					<h4 className="pt-4 pb-2 text-lg text-primary-400">Deskripsi UKM</h4>
 					<p className="text-lg xl:text-xl">{ukmDescription}</p>
 				</div>
