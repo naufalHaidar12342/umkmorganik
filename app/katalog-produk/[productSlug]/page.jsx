@@ -82,7 +82,7 @@ export default async function ProductInfos({ params }) {
 	return (
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
 			<div className="flex flex-col items-center">
-				<div className="w-full h-56 xl:h-[400px] relative">
+				<div className="w-full h-56 xl:h-[600px] relative">
 					<Image
 						removeWrapper
 						as={NextImage}

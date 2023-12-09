@@ -90,15 +90,14 @@ export async function generateMetadata() {
 export default async function UmkmList() {
 	const fetchedUkmProfiles = await fetchAllUmkmProfiles();
 	return (
-		<div className="h-screen flex flex-col flex-wrap w-full max-w-6xl">
+		<div className="flex flex-col flex-wrap w-full max-w-6xl">
 			<h3 className="text-2xl font-bold text-center xl:text-start">
 				UMKM Dengan Produk Organik
 			</h3>
-			<div className="grid grid-cols-1 col-span-2 gap-7 py-5">
+			<div className="grid grid-cols-1 col-span-2 gap-8 py-5">
 				{fetchedUkmProfiles.map((ukmProfile, index) => (
 					<Card
-						className="flex flex-col xl:flex-row bg-background/60 dark:bg-default-100/50"
-						shadow="sm"
+						className="flex flex-col xl:flex-row bg-background/60 dark:bg-default-100/50 shadow-lg shadow-success-100"
 						key={index}
 					>
 						<div className="w-full xl:w-1/2 h-48 xl:h-64 relative">

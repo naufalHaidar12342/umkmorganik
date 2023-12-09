@@ -81,7 +81,7 @@ export default async function ReadUmkmOrganikPost({ params }) {
 				const metaString = image.properties.alt;
 				const imageAlt = metaString?.replace(/ *\{[^)]*\} */g, "");
 				return (
-					<div className="w-full h-60 xl:h-[300px] relative py-2">
+					<div className="w-full h-60 xl:h-[600px] relative py-2">
 						<Image
 							as={NextImage}
 							removeWrapper

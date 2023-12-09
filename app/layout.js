@@ -1,24 +1,21 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Header from "./components/header";
 import Footer from "./components/footer";
-const inter = Inter({
-	subsets: ["latin"],
-	weights: ["400", "500", "600", "700"],
-});
-
+import { inter } from "./fonts";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={`${inter.className}`}>
 				<Header />
 				<Providers>
-					<main className="min-h-full flex flex-col justify-center items-center p-7">
+					<main className="min-h-screen flex flex-col justify-center items-center p-7">
 						{children}
 					</main>
 				</Providers>
 				<Footer />
+				<SpeedInsights />
 			</body>
 		</html>
 	);
