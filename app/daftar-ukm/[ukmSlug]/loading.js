@@ -1,3 +1,6 @@
+import { Card, CardFooter } from "@nextui-org/card";
+import { Skeleton } from "@nextui-org/skeleton";
+
 export default function LoadingSelectedUkm() {
 	return (
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
@@ -26,7 +29,7 @@ export default function LoadingSelectedUkm() {
 					<Skeleton className="pt-4 pb-2 text-lg text-primary-400" />
 					<Skeleton className="text-lg xl:text-xl" />
 				</div>
-				<Divider className="my-3" />
+
 				{/* produk-produk dari ukm */}
 				<div className="flex flex-col">
 					<Skeleton className="text-lg text-primary-400" />

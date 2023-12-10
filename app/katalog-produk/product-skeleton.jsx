@@ -1,4 +1,5 @@
 import { Card, CardFooter } from "@nextui-org/card";
+import { Skeleton } from "@nextui-org/skeleton";
 export default function ProductSkeleton() {
 	return (
 		<div className="flex flex-col">
