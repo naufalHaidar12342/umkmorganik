@@ -93,7 +93,7 @@ export default async function ProductCatalog() {
 		<div className="h-full max-w-6xl">
 			{/* in development: drop-down untuk jenis marketplace yang menjual produk (shopee, tokopedia, dsb) */}
 			{/* daftar produk */}
-			<div className="block">
+			<div className="flex flex-col">
 				<div className="flex flex-col xl:flex-row items-start">
 					<h3 className="text-2xl font-semibold">Semua produk</h3>
 				</div>
