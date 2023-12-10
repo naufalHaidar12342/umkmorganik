@@ -11,7 +11,7 @@ export async function generateMetadata() {
 	const mainUkm = await getUkmMenikJayaInfo();
 	const [openGraphTitle] = mainUkm.map((item) => item.ukmName);
 	const [openGraphDescription] = mainUkm.map((item) => item.ukmDescription);
-	console.log("isi data=", openGraphDescription);
+	// console.log("isi data=", openGraphDescription);
 	const [openGraphImage] = mainUkm.map(
 		(item) => item.creditImageReference.imageFile.url
 	);
@@ -41,7 +41,7 @@ export async function getUkmMenikJayaInfo() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		next: { revalidate: 100 },
+		cache: "default",
 		body: JSON.stringify({
 			query: `query MainUkmProfile {
 				ukmProfiles(where: {ukmSlug: "ukm-menik-jaya"}) {
@@ -69,7 +69,7 @@ export async function fetchThreeLatestProduct() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		next: { revalidate: 100 },
+		cache: "reload",
 		body: JSON.stringify({
 			query: `query LatestThreeProducts {
 				products(orderBy: createdAt_DESC, first: 3) {
@@ -151,7 +151,9 @@ export default async function Home() {
 									style={{ objectFit: "cover" }}
 									placeholder="blur"
 									blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
-									sizes="(max-width:1280px) 100vw, 75vw"
+									sizes="(max-width:1366px) 100vw, 75vw"
+									quality={70}
+									loading="eager"
 								/>
 							</div>
 
@@ -197,6 +199,7 @@ export default async function Home() {
 										sizes="(max-width:1366px)100vw, 75vw"
 										placeholder="blur"
 										blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
+										quality={65}
 									/>
 									<CardFooter className="absolute bottom-0 h-[55%] xl:h-[37%] xl:right-0 z-10 justify-center flex flex-col xl:flex-row xl:justify-between p-4 bg-slate-950">
 										<div className="flex flex-col">
@@ -247,10 +250,11 @@ export default async function Home() {
 								src={blogpostCoverImage}
 								style={{ objectFit: "cover" }}
 								fill
-								priority={false}
 								sizes="(max-width:1366px)100vw, 75vw"
 								placeholder="blur"
 								blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
+								quality={60}
+								priority={false}
 							/>
 							<CardFooter className="absolute bottom-0 xl:right-0 z-10 flex items-end xl:items-end flex-col p-4 bg-slate-950">
 								<div className="flex flex-col">
