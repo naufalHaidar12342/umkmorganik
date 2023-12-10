@@ -132,9 +132,9 @@ export default async function Home() {
 	const blogpostCoverImage = fetchedBlogpost.creditImageReference.imageFile.url;
 	return (
 		<div id="homepage">
-			<div className="max-w-6xl" id="content-width">
+			<div className="flex flex-col max-w-6xl" id="content-width">
 				{/* UKM Menik Jaya */}
-				<div className="block pt-2 pb-9 ">
+				<div className="flex flex-col pt-2 pb-9 ">
 					<h2 className="flex justify-start xl:justify-end text-3xl font-bold pb-5">
 						Sekilas UKM Menik Jaya
 					</h2>
@@ -172,7 +172,7 @@ export default async function Home() {
 					</div>
 				</div>
 				{/* produk minggu ini */}
-				<div className="block pt-8 pb-8">
+				<div className="flex flex-col pt-8 pb-8">
 					<div className="flex flex-col xl:flex-row justify-center items-baseline xl:justify-start pb-5 font-semibold">
 						<h3 className="text-2xl"> Rekomendasi produk</h3>
 						<Link
@@ -232,7 +232,7 @@ export default async function Home() {
 					</div>
 				</div>
 				{/* info terbaru dalam bentuk blog post */}
-				<div className="block pt-4 pb-8">
+				<div className="flex flex-col pt-4 pb-8">
 					<div className="flex flex-col xl:flex-row justify-center items-baseline xl:justify-end pb-5 font-semibold">
 						<h3 className="text-2xl">Info Terbaru</h3>
 						<Link
