@@ -4,6 +4,7 @@ import { Link } from "@nextui-org/link";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { FALLBACK_HYGRAPH_API } from "../constant/hygraph-api";
+import { SOLIDCOLOR_BLURDATA } from "../constant/solidcolor-blurdata";
 
 export async function fetchOpenGraphUkmProduct() {
 	const openGraphUkmProduct = await fetch(FALLBACK_HYGRAPH_API, {
@@ -11,7 +12,7 @@ export async function fetchOpenGraphUkmProduct() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		next: { revalidate: 100 },
+		next: { revalidate: 3600 },
 		body: JSON.stringify({
 			query: `query LatestProducts {
 				products(orderBy: createdAt_DESC, first: 1) {
@@ -63,7 +64,8 @@ export async function fetchLatestProduct() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		next: { revalidate: 100 },
+		// revalidate every 5 minutes (300 seconds)
+		next: { revalidate: 300 },
 		body: JSON.stringify({
 			query: `query LatestProducts {
 				products(orderBy: createdAt_DESC) {
@@ -96,26 +98,25 @@ export default async function ProductCatalog() {
 				<div className="flex flex-col xl:flex-row items-start">
 					<h3 className="text-2xl font-semibold">Semua produk</h3>
 				</div>
-				<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-4">
+				<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-4">
 					{latestProduct.map((productFetched, index) => (
 						<div className="flex flex-col" key={index}>
 							<Card
-								className="col-span-12 sm:col-span-4 w-60 h-56 xl:h-[360px] relative"
+								className="col-span-12 sm:col-span-4 w-60 h-96 xl:h-[360px] relative shadow shadow-green-400 hover:scale-110 hover:shadow-md hover:shadow-green-400"
 								isFooterBlurred
 							>
-								<Image
-									as={NextImage}
-									isZoomed
-									removeWrapper
+								<NextImage
 									alt={`Cover image untuk produk ${productFetched.productName}`}
-									className="z-0"
+									className="z-0 rounded-2xl"
 									src={productFetched.creditImageReference.imageFile.url}
 									style={{ objectFit: "cover" }}
 									fill
 									priority={true}
-									sizes="(max-width:1366)100vw, 85vw"
+									sizes="(max-width:1366px)100vw, 85vw"
+									placeholder="blur"
+									blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
 								/>
-								<CardFooter className="absolute bottom-0 xl:right-0 z-10 flex flex-col items-start p-4">
+								<CardFooter className="absolute bottom-0 h-1/2 xl:h-[48%] xl:right-0 z-10 flex flex-col items-start py-10 px-6 bg-slate-950">
 									<div className="flex flex-col">
 										<span className="">
 											{productFetched.productOrigin.ukmName}
@@ -126,9 +127,8 @@ export default async function ProductCatalog() {
 									</div>
 									<Link
 										as={NextLink}
-										color="primary"
 										href={`/katalog-produk/${productFetched.productSlug}`}
-										className="w-full mt-4 xl:mt-0 xl:w-auto capitalize"
+										className="w-full mt-4 xl:mt-0 xl:w-auto capitalize text-primary-600"
 										size="lg"
 									>
 										Info lengkap

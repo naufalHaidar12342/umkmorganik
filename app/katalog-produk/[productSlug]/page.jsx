@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@nextui-org/button";
 import { IoCartOutline } from "react-icons/io5";
+import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 
 export async function generateMetadata({ params }) {
 	const [selectedProduct] = await fetchInfoSelectedProduct(params.productSlug);
@@ -91,7 +92,9 @@ export default async function ProductInfos({ params }) {
 						style={{ objectFit: "cover" }}
 						fill
 						priority={true}
-						sizes="(max-width:1366)100vw, 85vw"
+						sizes="(max-width:1366px)100vw, 85vw"
+						placeholder="blur"
+						blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
 					/>
 				</div>
 				<ReactMarkdown
