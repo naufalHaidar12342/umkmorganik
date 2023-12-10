@@ -151,9 +151,8 @@ export default async function Home() {
 									style={{ objectFit: "cover" }}
 									placeholder="blur"
 									blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
-									sizes="(max-width:1366px) 100vw, 75vw"
+									sizes="(max-width:1366px) 100vw, 55vw"
 									quality={70}
-									loading="eager"
 								/>
 							</div>
 
@@ -196,7 +195,7 @@ export default async function Home() {
 										style={{ objectFit: "cover" }}
 										fill
 										priority={true}
-										sizes="(max-width:1366px)100vw, 75vw"
+										sizes="(max-width:1366px)100vw, 45vw"
 										placeholder="blur"
 										blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
 										quality={65}
@@ -250,7 +249,7 @@ export default async function Home() {
 								src={blogpostCoverImage}
 								style={{ objectFit: "cover" }}
 								fill
-								sizes="(max-width:1366px)100vw, 75vw"
+								sizes="(max-width:1366px)100vw, 55vw"
 								placeholder="blur"
 								blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
 								quality={60}
