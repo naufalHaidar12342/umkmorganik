@@ -141,7 +141,7 @@ export default async function Home() {
 					</h2>
 					<div className="grid w-full place-items-center min-h-[25rem] hover:shadow-md shadow-green-400 shadow-opacity-50 text-white rounded-2xl">
 						<div className="flex lg:flex-row-reverse flex-col justify-center items-center w-full h-full gap-[1rem] bg-slate-950 shadow-xl shadow-green-700 rounded-2xl">
-							<div className="w-full min-h-[16rem] h-full relative">
+							<div className="w-full h-[250px] xl:h-[25rem] relative">
 								<Image
 									className="rounded-2xl "
 									src={ukmCoverImage}
@@ -187,19 +187,25 @@ export default async function Home() {
 					<div className="grid md:grid-cols-2 xl:grid-cols-3 col-span-3 gap-5">
 						{fetchedProduct.map((productFetched, index) => (
 							<div className="flex flex-col" key={index}>
-								<Card className="col-span-12 sm:col-span-4 h-60 lg:h-[400px] relative shadow shadow-green-500">
-									<Image
-										alt={`Cover image untuk produk ${productFetched.productName}`}
-										className="z-0"
-										src={productFetched.creditImageReference.imageFile.url}
-										style={{ objectFit: "cover" }}
-										fill
-										priority={true}
-										sizes="(max-width:1366px)100vw, 45vw"
-										placeholder="blur"
-										blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
-										quality={65}
-									/>
+								<Card className="col-span-12 sm:col-span-4 shadow shadow-green-500">
+									<div className="w-full h-60 lg:h-[400px] relative">
+										<Image
+											alt={`Cover image untuk produk ${productFetched.productName}`}
+											className="z-0"
+											src={productFetched.creditImageReference.imageFile.url}
+											style={{
+												objectFit: "cover",
+												height: "100%",
+												width: "100%",
+											}}
+											fill
+											priority={true}
+											sizes="(max-width:1366px)100vw, 45vw"
+											placeholder="blur"
+											blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
+											quality={65}
+										/>
+									</div>
 									<CardFooter className="absolute bottom-0 h-[55%] xl:h-[37%] xl:right-0 z-10 justify-center flex flex-col xl:flex-row xl:justify-between p-4 bg-slate-950">
 										<div className="flex flex-col">
 											<span className="">
