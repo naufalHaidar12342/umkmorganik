@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { Card, CardHeader, CardFooter, CardBody } from "@nextui-org/card";
+import { Card, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import NextLink from "next/link";
 import { FALLBACK_HYGRAPH_API } from "./constant/hygraph-api";
-import { Suspense } from "react";
 import { SOLIDCOLOR_BLURDATA } from "./constant/solidcolor-blurdata";
 
 export async function generateMetadata() {
@@ -139,9 +138,9 @@ export default async function Home() {
 					<h2 className="flex justify-start xl:justify-end text-3xl font-bold pb-5">
 						Sekilas UKM Menik Jaya
 					</h2>
-					<div className="grid w-full place-items-center min-h-[25rem] hover:shadow-md shadow-green-400 shadow-opacity-50 text-white rounded-2xl">
-						<div className="flex lg:flex-row-reverse flex-col justify-center items-center w-full h-full gap-[1rem] bg-slate-950 shadow-xl shadow-green-700 rounded-2xl">
-							<div className="w-full h-[250px] xl:h-[25rem] relative">
+					<div className="grid w-full place-items-center min-h-[400px] hover:shadow-md shadow-green-400 shadow-opacity-50 text-white rounded-2xl">
+						<div className="flex lg:flex-row-reverse flex-col justify-center items-center w-full h-full gap-4 bg-slate-950 shadow-xl shadow-green-700 rounded-2xl">
+							<div className="w-full h-[250px] xl:h-[400px] relative">
 								<Image
 									className="rounded-2xl "
 									src={ukmCoverImage}

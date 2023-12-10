@@ -1,5 +1,4 @@
 import { Card, CardFooter } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 import NextImage from "next/image";
 import NextLink from "next/link";
