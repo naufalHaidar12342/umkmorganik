@@ -152,6 +152,7 @@ export default async function Home() {
 									blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
 									sizes="(max-width:1366px) 100vw, 55vw"
 									quality={70}
+									loading="eager"
 								/>
 							</div>
 
