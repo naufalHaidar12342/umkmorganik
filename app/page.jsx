@@ -40,7 +40,7 @@ export async function getUkmMenikJayaInfo() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		cache: "default",
+		cache: "reload",
 		body: JSON.stringify({
 			query: `query MainUkmProfile {
 				ukmProfiles(where: {ukmSlug: "ukm-menik-jaya"}) {
@@ -68,7 +68,7 @@ export async function fetchThreeLatestProduct() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		cache: "reload",
+		cache: "no-store",
 		body: JSON.stringify({
 			query: `query LatestThreeProducts {
 				products(orderBy: createdAt_DESC, first: 3) {
@@ -184,7 +184,7 @@ export default async function Home() {
 							Lihat semua
 						</Link>
 					</div>
-					<div className="grid md:grid-cols-2 xl:grid-cols-3 col-span-3 gap-5">
+					<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
 						{fetchedProduct.map((productFetched, index) => (
 							<div className="flex flex-col" key={index}>
 								<Card className="col-span-12 sm:col-span-4 shadow shadow-green-500">
@@ -246,7 +246,7 @@ export default async function Home() {
 					</div>
 					<div className="flex flex-col">
 						<Card
-							className="h-56 xl:h-[500px] relative shadow-md shadow-green-600"
+							className="h-56 xl:h-[300px] relative shadow-md shadow-green-600"
 							isFooterBlurred
 						>
 							<Image
@@ -266,9 +266,8 @@ export default async function Home() {
 									<Link
 										as={NextLink}
 										href={`/blog-post/${blogpostSlug}`}
-										color="foreground"
 										underline="hover"
-										className="w-full mt-4 xl:mt-0 xl:w-auto capitalize"
+										className="w-full mt-4 xl:mt-0 xl:w-auto capitalize text-white"
 										showAnchorIcon
 									>
 										{blogpostTitle}

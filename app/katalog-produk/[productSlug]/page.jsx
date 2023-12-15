@@ -6,8 +6,10 @@ import NextLink from "next/link";
 import ReactMarkdown from "react-markdown";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@nextui-org/button";
-import { IoCartOutline } from "react-icons/io5";
+
 import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
+import CustomBreadcrumbs from "@/app/components/breadcrumbs";
+import ShoppingLink from "./_partial-views-productSlug/shopping-link";
 
 export async function generateMetadata({ params }) {
 	const [selectedProduct] = await fetchInfoSelectedProduct(params.productSlug);
@@ -80,66 +82,60 @@ export default async function ProductInfos({ params }) {
 	const productOriginUkmName = selectedProduct.productOrigin.ukmName;
 	const productOriginUkmSlug = selectedProduct.productOrigin.ukmSlug;
 	const productLink = selectedProduct.productLink;
+	const breadCrumbsProductInfo = [
+		{ pageName: "Halaman Utama", pageUrl: "/" },
+		{ pageName: "Katalog Produk", pageUrl: "/katalog-produk" },
+		{
+			pageName: `${productOriginUkmName} - ${productName}`,
+			pageUrl: `/ukm/${productOriginUkmSlug}`,
+		},
+	];
 	return (
 		<div className="flex flex-col flex-wrap w-full max-w-6xl">
-			<div className="flex flex-col items-center">
-				<div className="w-full h-56 xl:h-[600px] relative">
-					<Image
-						removeWrapper
-						as={NextImage}
-						src={productCoverImage}
-						alt={`Foto sampul dari produk ${productName}`}
-						style={{ objectFit: "cover" }}
-						fill
-						priority={true}
-						sizes="(max-width:1366px)100vw, 85vw"
-						placeholder="blur"
-						blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
-					/>
+			<CustomBreadcrumbs breadcrumbsPath={breadCrumbsProductInfo} />
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+				<div className="flex flex-col">
+					<div className="w-full h-56 xl:h-[320px] relative">
+						<Image
+							removeWrapper
+							as={NextImage}
+							src={productCoverImage}
+							alt={`Foto sampul dari produk ${productName}`}
+							className="xl:w-[320px]"
+							style={{ objectFit: "cover" }}
+							fill
+							priority={true}
+							sizes="(max-width:1366px)100vw, 85vw"
+							placeholder="blur"
+							blurDataURL={`data:image/webp;base64,${SOLIDCOLOR_BLURDATA}`}
+						/>
+					</div>
+
+					<ReactMarkdown
+						className="italic pt-2"
+						components={{
+							a: (link) => {
+								return (
+									<Link
+										className="text-primary-800 font-semibold"
+										href={link.href}
+										referrerPolicy="no-referrer"
+										target="_blank"
+									>
+										{link.children}
+									</Link>
+								);
+							},
+						}}
+					>
+						{productCreditImage}
+					</ReactMarkdown>
 				</div>
-				<ReactMarkdown
-					className="italic pt-2"
-					components={{
-						a: (link) => {
-							return (
-								<Link
-									color="primary"
-									href={link.href}
-									referrerPolicy="no-referrer"
-									target="_blank"
-								>
-									{link.children}
-								</Link>
-							);
-						},
-					}}
-				>
-					{productCreditImage}
-				</ReactMarkdown>
-				<div className="w-full grid grid-cols-1 xl:grid-cols-3 items-start gap-5 pt-3">
+				<div className="w-full flex flex-col items-start gap-5 pt-3">
 					<div className="flex flex-col xl:col-span-1">
 						<h3 className=" text-xl font-semibold">
 							{productOriginUkmName} - {productName}
 						</h3>
-						<Button
-							as={Link}
-							href={`
-								${productLink === null ? "#belum-ada-link-produk" : productLink}
-							`}
-							size="lg"
-							className="mt-3 text-lg font-medium"
-							color="primary"
-							variant="shadow"
-							startContent={<IoCartOutline className="w-6 h-6" />}
-						>
-							Belanja sekarang
-						</Button>
-					</div>
-					<div className="flex flex-col col-span-2">
-						<h4 className="text-lg text-primary-400 font-semibold">
-							Deskripsi produk
-						</h4>
-						<p className="text-lg">{productDescription}</p>
 						{/* kategori produk */}
 						<div className="flex flex-wrap gap-2 pt-1">
 							{productCategory.map((category, index) => (
@@ -149,6 +145,17 @@ export default async function ProductInfos({ params }) {
 							))}
 						</div>
 					</div>
+					<div className="flex flex-col col-span-2">
+						<h4 className="text-lg text-primary-700 font-semibold">
+							Deskripsi produk
+						</h4>
+						<p className="text-lg">{productDescription}</p>
+					</div>
+					<ShoppingLink
+						productLink={productLink}
+						productUkmOrigin={productOriginUkmName}
+						productTitle={productName}
+					/>
 				</div>
 			</div>
 		</div>
