@@ -5,14 +5,17 @@ import { Image } from "@nextui-org/image";
 import NextImage from "next/image";
 import ReactMarkdown from "react-markdown";
 import { Divider } from "@nextui-org/divider";
-import { Card, CardFooter } from "@nextui-org/card";
+import { Card, CardFooter, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { SiShopee } from "react-icons/si";
 import ShopeeMarketplaceButton from "./shopee-button";
 import UkmWebsiteLink from "./ukm-website-link";
 import TokopediaMarketplace from "./tokopedia-button";
 import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 
+import UkmMarketplaces from "./_partial-views-selected-ukm/ukm-marketplaces";
+import { SlLink } from "react-icons/sl";
+import UkmOfficialSite from "./_partial-views-selected-ukm/ukm-official-site";
+import CustomBreadcrumbs from "@/app/components/breadcrumbs";
 export async function generateMetadata({ params }) {
 	const [selectedUkm] = await fetchSelectedUkmProfile(params.ukmSlug);
 	const openGraphUkmName = selectedUkm.ukmName;
@@ -121,10 +124,16 @@ export default async function ReadUmkmProfile({ params }) {
 	console.log("isi ukmMarketplaces=", ukmMarketplaces);
 	// const shopeeStore = ukmMarketplaces.shopeeStore;
 	// console.log("isi shopeeStore=", shopeeStore);
-
+	const ukmProfileBreadcrumbs = [
+		{ pageName: "Halaman Utama", pageUrl: "/" },
+		{ pageName: "Daftar UKM", pageUrl: "/daftar-ukm" },
+		{ pageName: ukmName, pageUrl: `/daftar-ukm/${params.ukmSlug}` },
+	];
 	return (
-		<div className="flex flex-col flex-wrap w-full max-w-6xl">
+		<div className="flex flex-col flex-wrap w-full max-w-7xl">
+			<CustomBreadcrumbs breadcrumbsPath={ukmProfileBreadcrumbs} />
 			<div className="flex flex-col flex-wrap items-start">
+				{/* foto sampul ukm */}
 				<div className="w-full h-56 xl:h-[440px] items-center relative">
 					<NextImage
 						className="rounded-2xl"
@@ -133,9 +142,11 @@ export default async function ReadUmkmProfile({ params }) {
 						style={{ objectFit: "cover" }}
 						fill
 						priority={true}
-						sizes="(max-width:480px) 100vw, (max-width:1366px) 80vw, 65vw"
+						sizes="(max-width:480px) 100vw, (max-width:1366px) 80vw, 75vw"
 						placeholder="blur"
 						blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
+						quality={70}
+						loading="eager"
 					/>
 				</div>
 				{/* credit foto sampul untuk profil ukm */}
@@ -145,10 +156,10 @@ export default async function ReadUmkmProfile({ params }) {
 						a: (link) => {
 							return (
 								<Link
-									color="primary"
 									href={link.href}
 									referrerPolicy="no-referrer"
 									target="_blank"
+									className="text-primary-800"
 								>
 									{link.children}
 								</Link>
@@ -161,82 +172,76 @@ export default async function ReadUmkmProfile({ params }) {
 				{/* profil ukm */}
 				<div className="flex flex-col items-start pt-3">
 					<h3 className="text-2xl font-semibold">{ukmName}</h3>
-					<h4 className="py-2 text-lg text-primary-400">Tentang Usaha</h4>
+					<h4 className="py-2 text-lg text-primary-700">Tentang Usaha</h4>
 					<p className="text-lg">Ketua UKM : {ukmChairman}</p>
 					<p className="text-lg">
 						Kategori Produk:{" "}
 						{selectedUkm.categoryOfUkmProducts.map((item) => item)}
 					</p>
-					<div className="flex flex-col xl:flex-row xl:gap-1 text-lg">
-						<span>Situs milik UKM:</span>
-						<UkmWebsiteLink
-							ukmName={ukmName}
-							ukmWebsite={selectedUkm.ukmWebsite}
-						/>
-					</div>
-					<div className="flex flex-col md:flex-row md:items-center gap-3 pt-4">
-						<span className="text-lg">Lapak/marketplace UKM :</span>
-						<ShopeeMarketplaceButton
-							shopeeMarketplaceLink={ukmMarketplaces.shopeeStore}
-							ukmName={ukmName}
-						/>
-						<TokopediaMarketplace
-							ukmTokopediaLink={ukmMarketplaces.tokopediaStore}
-							ukmName={ukmName}
-						/>
-					</div>
-					<h4 className="pt-4 pb-2 text-lg text-primary-400">Deskripsi UKM</h4>
+					<UkmOfficialSite
+						ukmName={ukmName}
+						ukmWebsiteLink={selectedUkm.ukmWebsite}
+					/>
+
+					<UkmMarketplaces
+						shopeeLink={ukmMarketplaces.shopeeStore}
+						tokopediaLink={ukmMarketplaces.tokopediaStore}
+						ukmName={ukmName}
+					/>
+					<h4 className="pt-4 pb-2 text-lg text-primary-700">Deskripsi UKM</h4>
 					<p className="text-lg xl:text-xl">{ukmDescription}</p>
 				</div>
 				<Divider className="my-3" />
 				{/* produk-produk dari ukm */}
 				<div className="flex flex-col">
-					<h4 className="text-lg text-primary-400">
+					<h4 className="text-lg text-primary-700">
 						Produk-produk dari {selectedUkm.ukmName}
 					</h4>
-					<div className="grid grid-cols-1 xl:grid-cols-4 col-span-1 gap-5 py-2">
-						{productsOfSelectedUkm.map((productFetched, index) => (
-							<div className="flex flex-col" key={index}>
-								<Card
-									className="col-span-12 sm:col-span-4 w-60 h-56 xl:h-[360px] relative"
-									isFooterBlurred
-								>
-									<Image
-										as={NextImage}
-										isZoomed
-										removeWrapper
-										alt={`Cover image untuk produk ${productFetched.productName}`}
-										className="z-0"
-										src={productFetched.creditImageReference.imageFile.url}
-										style={{ objectFit: "cover" }}
-										fill
-										priority={true}
-										sizes="(max-width:480px) 100vw, (max-width:1366px) 80vw, 65vw"
-										placeholder="blur"
-										blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
-									/>
-									<CardFooter className="absolute bottom-0 xl:right-0 z-10 flex flex-col items-start p-4">
-										<div className="flex flex-col">
-											<span className="">
-												{productFetched.productOrigin.ukmName}
-											</span>
-											<span className="font-semibold">
-												{productFetched.productName}
-											</span>
-										</div>
-										<Link
-											as={NextLink}
-											color="primary"
-											href={`/katalog-produk/${productFetched.productSlug}`}
-											className="w-full mt-4 xl:mt-0 xl:w-auto capitalize"
-											size="lg"
-										>
-											Info lengkap
-										</Link>
-									</CardFooter>
-								</Card>
-							</div>
-						))}
+					<div className="flex justify-center">
+						<div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-6 py-2 ">
+							{productsOfSelectedUkm.map((productFetched, index) => (
+								<div className="flex flex-col" key={index}>
+									<Card className="w-60 h-80 xl:h-[400px] relative bg-slate-950 shadow-md shadow-green-600">
+										<CardBody className="">
+											<Image
+												as={NextImage}
+												removeWrapper
+												alt={`Cover image untuk produk ${productFetched.productName}`}
+												className=""
+												src={productFetched.creditImageReference.imageFile.url}
+												style={{ objectFit: "cover" }}
+												fill
+												priority={false}
+												sizes="(max-width:480px) 100vw, (max-width:1366px) 80vw, 65vw"
+												placeholder="blur"
+												blurDataURL={`data:image/png;base64,${SOLIDCOLOR_BLURDATA}`}
+												quality={65}
+											/>
+										</CardBody>
+										<CardFooter className="flex flex-col items-start p-4 h-[54%] lg:h-[47%]">
+											<div className="flex flex-col w-full">
+												<span className="font-bold">
+													{productFetched.productOrigin.ukmName}
+												</span>
+												<span className="font-medium">
+													{productFetched.productName}
+												</span>
+												<Link
+													as={NextLink}
+													href={`/katalog-produk/${productFetched.productSlug}`}
+													className="mt-3 text-primary-700 w-full capitalize "
+													underline="hover"
+													anchorIcon={<SlLink className="ml-2 text-lg" />}
+													showAnchorIcon
+												>
+													Info lengkap
+												</Link>
+											</div>
+										</CardFooter>
+									</Card>
+								</div>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
