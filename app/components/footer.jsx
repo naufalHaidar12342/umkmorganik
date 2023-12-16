@@ -14,7 +14,13 @@ export default function Footer() {
 				</div>
 				<div className="flex flex-col">
 					<p className="text-lg font-bold">Kontak</p>
-					<Link href={"#"}>Email</Link>
+					<Link
+						href={"mailto:ukmmenikjaya@gmail.com"}
+						className="text-primary-700 text-lg"
+						showAnchorIcon
+					>
+						Email
+					</Link>
 				</div>
 			</div>
 		</footer>
