@@ -6,10 +6,6 @@ import NextImage from "next/image";
 import ReactMarkdown from "react-markdown";
 import { Divider } from "@nextui-org/divider";
 import { Card, CardFooter, CardBody } from "@nextui-org/card";
-import { Button } from "@nextui-org/button";
-import ShopeeMarketplaceButton from "./shopee-button";
-import UkmWebsiteLink from "./ukm-website-link";
-import TokopediaMarketplace from "./tokopedia-button";
 import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 
 import UkmMarketplaces from "./_partial-views-selected-ukm/ukm-marketplaces";

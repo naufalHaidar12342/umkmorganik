@@ -217,11 +217,9 @@ export default async function Home() {
 										</div>
 										<Button
 											as={NextLink}
-											radius="full"
-											variant="solid"
-											color="primary"
+											variant="bordered"
 											href={`/katalog-produk/${productFetched.productSlug}`}
-											className="w-full mt-4 xl:mt-0 xl:w-auto capitalize"
+											className="w-full mt-4 xl:mt-0 xl:w-auto capitalize font-bold text-primary-700 hover:bg-primary-700 hover:text-slate-950"
 											size="lg"
 										>
 											Info lengkap

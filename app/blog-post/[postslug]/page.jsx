@@ -8,6 +8,7 @@ import ISOTimeToHumanReadable from "@/app/utilities/iso_date_to_human_format";
 import { IoMdSync } from "react-icons/io";
 import { TfiWrite } from "react-icons/tfi";
 import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
+import CustomBreadcrumbs from "@/app/components/breadcrumbs";
 
 export async function fetchSelectedBlogpost(postSlug) {
 	const selectedBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
@@ -120,8 +121,18 @@ export default async function ReadUmkmOrganikPost({ params }) {
 			return <ol className="list-decimal list-inside">{list.children}</ol>;
 		},
 	};
+	const breadCrumbsBlogPost = [
+		{ pageName: "Halaman Utama", pageUrl: "/" },
+		{ pageName: "Blog", pageUrl: "/blog-post" },
+		{
+			pageName: `${blogPost.postTitle}`,
+			pageUrl: `/blog-post/${blogPost.postSlug}`,
+		},
+	];
+
 	return (
 		<div className="flex flex-col w-full max-w-6xl">
+			<CustomBreadcrumbs breadcrumbsPath={breadCrumbsBlogPost} />
 			<h3 className="pb-5 text-3xl font-semibold text-center">
 				{blogPost.postTitle}
 			</h3>
@@ -144,7 +155,7 @@ export default async function ReadUmkmOrganikPost({ params }) {
 					a: (link) => {
 						return (
 							<Link
-								color="primary"
+								className="text-primary-800 font-semibold"
 								href={link.href}
 								referrerPolicy="no-referrer"
 								target="_blank"
@@ -157,23 +168,15 @@ export default async function ReadUmkmOrganikPost({ params }) {
 			>
 				{blogPost.creditImageReference.imageCreditMarkdown}
 			</ReactMarkdown>
-			<div className="flex flex-col gap-2">
-				<Chip
-					className="text-base"
-					variant="flat"
-					color="success"
-					startContent={<IoMdSync className="mx-[6px]" />}
-				>
+			<div className="flex flex-col h-full w-full gap-3 flex-wrap pt-3">
+				<Link className="text-lg text-primary-600">
+					<IoMdSync className="w-8 h-8 md:w-6 md:h-6 mr-4" />
 					Diperbarui: {ISOTimeToHumanReadable(blogPostUpdatedDate)}
-				</Chip>
-				<Chip
-					className="text-base"
-					variant="flat"
-					color="primary"
-					startContent={<TfiWrite className="mx-[6px]" />}
-				>
+				</Link>
+				<Link className="text-lg text-primary-600 ">
+					<TfiWrite className="w-8 h-8 md:w-6 md:h-6 mr-4" />
 					Ditulis: {ISOTimeToHumanReadable(blogPostWrittenDate)}
-				</Chip>
+				</Link>
 			</div>
 			<ReactMarkdown className="py-4" components={customizedMarkdownComponents}>
 				{blogPost.content.markdown}
