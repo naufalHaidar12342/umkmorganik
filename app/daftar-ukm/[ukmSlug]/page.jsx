@@ -12,6 +12,7 @@ import UkmMarketplaces from "./_partial-views-selected-ukm/ukm-marketplaces";
 import { SlLink } from "react-icons/sl";
 import UkmOfficialSite from "./_partial-views-selected-ukm/ukm-official-site";
 import CustomBreadcrumbs from "@/app/components/breadcrumbs";
+import { notFound } from "next/navigation";
 export async function generateMetadata({ params }) {
 	const [selectedUkm] = await fetchSelectedUkmProfile(params.ukmSlug);
 	const openGraphUkmName = selectedUkm.ukmName;
@@ -73,6 +74,9 @@ export async function fetchSelectedUkmProfile(ukmSlug) {
 	})
 		.then((res) => res.json())
 		.catch((err) => console.log(err));
+	if (ukmSlug != selectedUkm.data.ukmProfiles.ukmSlug) {
+		notFound();
+	}
 	return selectedUkm.data.ukmProfiles;
 }
 

@@ -9,6 +9,7 @@ import { IoMdSync } from "react-icons/io";
 import { TfiWrite } from "react-icons/tfi";
 import { SOLIDCOLOR_BLURDATA } from "@/app/constant/solidcolor-blurdata";
 import CustomBreadcrumbs from "@/app/components/breadcrumbs";
+import { notFound } from "next/navigation";
 
 export async function fetchSelectedBlogpost(postSlug) {
 	const selectedBlogpost = await fetch(`${FALLBACK_HYGRAPH_API}`, {
@@ -39,6 +40,9 @@ export async function fetchSelectedBlogpost(postSlug) {
 	})
 		.then((res) => res.json())
 		.catch((err) => console.log(err));
+	if (postSlug !== selectedBlogpost.data.blogPosts.postSlug) {
+		notFound();
+	}
 	return selectedBlogpost.data.blogPosts;
 }
 
