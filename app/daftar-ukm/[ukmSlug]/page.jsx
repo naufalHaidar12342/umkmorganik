@@ -74,7 +74,10 @@ export async function fetchSelectedUkmProfile(ukmSlug) {
 	})
 		.then((res) => res.json())
 		.catch((err) => console.log(err));
-	if (ukmSlug != selectedUkm.data.ukmProfiles.ukmSlug) {
+	let [fetchedUkmSlug] = selectedUkm.data.ukmProfiles.map(
+		(item) => item.ukmSlug
+	);
+	if (ukmSlug != fetchedUkmSlug) {
 		notFound();
 	}
 	return selectedUkm.data.ukmProfiles;

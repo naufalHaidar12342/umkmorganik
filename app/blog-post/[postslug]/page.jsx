@@ -143,7 +143,7 @@ export default async function ReadUmkmOrganikPost({ params }) {
 	return (
 		<div className="flex flex-col w-full max-w-6xl">
 			<CustomBreadcrumbs breadcrumbsPath={breadCrumbsBlogPost} />
-			<h3 className="pb-5 text-3xl font-semibold text-center">
+			<h3 className="py-5 text-3xl font-bold text-center">
 				{blogPost.postTitle}
 			</h3>
 			<div className="w-full h-56 xl:h-[400px] relative">
