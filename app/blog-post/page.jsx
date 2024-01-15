@@ -100,7 +100,7 @@ export default async function BlogPost() {
 					<h3 className="text-2xl">Post Terbaru</h3>
 				</div>
 				<div className="flex flex-col">
-					<Card className="h-56 xl:h-[450px] relative shadow-xl shadow-emerald-500">
+					<Card className="h-56 xl:h-[450px] relative shadow-xl shadow-emerald-200">
 						<Image
 							as={NextImage}
 							removeWrapper

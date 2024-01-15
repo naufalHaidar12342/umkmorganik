@@ -138,7 +138,7 @@ export default async function Home() {
 					<h2 className="flex justify-start xl:justify-end text-3xl font-bold pb-5">
 						Sekilas UKM Menik Jaya
 					</h2>
-					<div className="grid w-full place-items-center min-h-[400px] hover:shadow-md shadow-green-400 shadow-opacity-50 text-white rounded-2xl">
+					<div className="grid w-full place-items-center min-h-[400px] text-white rounded-2xl">
 						<div className="flex lg:flex-row-reverse flex-col justify-center items-center w-full h-full gap-4 bg-slate-950 shadow-xl shadow-green-700 rounded-2xl">
 							<div className="w-full h-[250px] xl:h-[400px] relative">
 								<Image
