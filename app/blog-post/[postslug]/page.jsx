@@ -40,9 +40,15 @@ export async function fetchSelectedBlogpost(postSlug) {
 	})
 		.then((res) => res.json())
 		.catch((err) => console.log(err));
-	if (postSlug !== selectedBlogpost.data.blogPosts.postSlug) {
+	let [fetchedBlogpostSlug] = selectedBlogpost.data.blogPosts.map(
+		(item) => item.postSlug
+	);
+	// console.log("isi slug=", fetchedBlogpostSlug);
+	// console.log("isi slug dari argumen=", postSlug);
+	if (postSlug !== fetchedBlogpostSlug) {
 		notFound();
 	}
+	// console.log("isi selectedBlogpost=", selectedBlogpost.data.blogPosts);
 	return selectedBlogpost.data.blogPosts;
 }
 
