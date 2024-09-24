@@ -40,7 +40,9 @@ export async function getUkmMenikJayaInfo() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		cache: "reload",
+		next:{
+			revalidate: 60
+		},
 		body: JSON.stringify({
 			query: `query MainUkmProfile {
 				ukmProfiles(where: {ukmSlug: "ukm-menik-jaya"}) {
@@ -68,7 +70,9 @@ export async function fetchThreeLatestProduct() {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		cache: "no-store",
+		next:{
+			revalidate:300
+		},
 		body: JSON.stringify({
 			query: `query LatestThreeProducts {
 				products(orderBy: createdAt_DESC, first: 3) {
